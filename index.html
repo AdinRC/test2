@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Loan Qualification Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
+        <div class="grid lg:grid-cols-2 lg:gap-12 items-start">
+            
+            <!-- Left Column: Calculator Form -->
+            <div class="bg-white dark:bg-gray-800 shadow-2xl rounded-xl p-6 sm:p-8 w-full">
+                <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 dark:text-white mb-6">
+                    Max Loan Qualification
+                </h1>
+
+                <form id="loan-form" class="space-y-4">
+                    <div>
+                        <label for="nama" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama</label>
+                        <input type="text" id="nama" name="nama" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., Nur Irdina" required>
+                    </div>
+                     <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., 012-3456789" required>
+                    </div>
+                     <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., name@example.com" required>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="gaji-bersih" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Gaji Bersih (RM)</label>
+                            <input type="number" id="gaji-bersih" name="gaji-bersih" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., 2150" required>
+                        </div>
+                        <div>
+                            <label for="komitmen" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Komitmen (RM)</label>
+                            <input type="number" id="komitmen" name="komitmen" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., 94" required>
+                        </div>
+                         <div>
+                            <label for="interest-rate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Interest Rate (%)</label>
+                            <input type="number" id="interest-rate" name="interest-rate" step="0.01" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., 4.1" value="4.1" required>
+                        </div>
+                        <div>
+                            <label for="loan-term" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Loan Term (Years)</label>
+                            <input type="number" id="loan-term" name="loan-term" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., 35" value="35" required>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <button type="submit" id="calculate-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-colors duration-300">
+                            Calculate & Record
+                        </button>
+                        <button type="button" id="clear-btn" class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-700 transition-colors duration-300">
+                            Clear
+                        </button>
+                    </div>
+                </form>
+                <div id="message-box" class="mt-6 text-center"></div>
+            </div>
+            
+            <!-- Right Column: Results -->
+            <div class="bg-white dark:bg-gray-800 shadow-2xl rounded-xl p-6 sm:p-8 w-full mt-8 lg:mt-0">
+                 <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 dark:text-white mb-6">
+                    Results
+                </h2>
+                <div id="results-content" class="hidden">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                            <span class="font-medium text-gray-600 dark:text-gray-300">DSR Used:</span>
+                            <span id="dsr-used-result" class="font-bold text-lg text-gray-800 dark:text-white"></span>
+                        </div>
+                        <div class="flex justify-between items-center bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                            <span class="font-medium text-gray-600 dark:text-gray-300">Max Instalment:</span>
+                            <span id="max-instalment-result" class="font-bold text-lg text-gray-800 dark:text-white"></span>
+                        </div>
+                        <div class="flex justify-between items-center bg-blue-100 dark:bg-blue-900/50 p-4 rounded-lg ring-1 ring-inset ring-blue-500/20">
+                            <span class="font-bold text-blue-800 dark:text-blue-200">Max Loan:</span>
+                            <span id="max-loan-result" class="font-extrabold text-xl text-blue-800 dark:text-blue-200"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="results-placeholder" class="text-center text-gray-500 dark:text-gray-400 py-12">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <p class="mt-4 text-sm font-medium">Your calculated loan qualification will appear here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- GET DOM ELEMENTS ---
+        const loanForm = document.getElementById('loan-form');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const resultsContent = document.getElementById('results-content');
+        const resultsPlaceholder = document.getElementById('results-placeholder');
+        const messageBox = document.getElementById('message-box');
+
+        function resetResultsView() {
+            resultsContent.classList.add('hidden');
+            resultsContent.classList.remove('fade-in');
+            resultsPlaceholder.classList.remove('hidden');
+        }
+
+        loanForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            calculateBtn.disabled = true;
+            calculateBtn.textContent = 'Calculating...';
+
+            // --- GETTING USER INPUT ---
+            const nama = document.getElementById('nama').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const gajiBersih = parseFloat(document.getElementById('gaji-bersih').value);
+            const komitmen = parseFloat(document.getElementById('komitmen').value);
+            const interestRate = parseFloat(document.getElementById('interest-rate').value) / 100;
+            const loanTerm = parseInt(document.getElementById('loan-term').value);
+
+            // --- VALIDATION ---
+            if (!nama || !phone || !email || isNaN(gajiBersih) || isNaN(komitmen) || isNaN(interestRate) || isNaN(loanTerm)) {
+                showMessage('Please fill in all fields correctly.', 'error');
+                resetResultsView();
+                enableButton();
+                return;
+            }
+            if (gajiBersih <= 0 || komitmen < 0 || interestRate <= 0 || loanTerm <= 0) {
+                showMessage('Please enter valid positive numbers for financial fields.', 'error');
+                resetResultsView();
+                enableButton();
+                return;
+            }
+
+            // --- CALCULATIONS ---
+            let dsrUsed;
+            if (gajiBersih < 3000) dsrUsed = 0.60;
+            else if (gajiBersih < 5000) dsrUsed = 0.70;
+            else if (gajiBersih < 7000) dsrUsed = 0.75;
+            else dsrUsed = 0.80;
+
+            const maxInstalment = (gajiBersih * dsrUsed) - komitmen;
+            if (maxInstalment <= 0) {
+                showMessage('Based on the provided details, you do not qualify for a loan.', 'error');
+                resetResultsView();
+                enableButton();
+                return;
+            }
+
+            const monthlyInterestRate = interestRate / 12;
+            const numberOfPayments = loanTerm * 12;
+            const factor = Math.pow(1 + monthlyInterestRate, numberOfPayments);
+            const maxLoan = maxInstalment * (factor - 1) / (monthlyInterestRate * factor);
+
+            // --- DISPLAY RESULTS ---
+            document.getElementById('dsr-used-result').textContent = `${(dsrUsed * 100).toFixed(0)}%`;
+            document.getElementById('max-instalment-result').textContent = `RM ${maxInstalment.toLocaleString('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            document.getElementById('max-loan-result').textContent = `RM ${maxLoan.toLocaleString('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            resultsPlaceholder.classList.add('hidden');
+            resultsContent.classList.remove('hidden');
+            resultsContent.classList.add('fade-in');
+            
+            // --- GOOGLE SHEETS INTEGRATION ---
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwxua54VVus9p9f-GoGOzPFBLvZCUJc2LiFSXt_PWYFy71P0A4kkpdDXS7uLyp3lTYU/exec'; // <-- IMPORTANT: REPLACE WITH YOUR URL
+            const formData = new FormData();
+            formData.append('Timestamp', new Date().toLocaleString('en-MY', { timeZone: 'Asia/Kuala_Lumpur' }));
+            formData.append('Nama', nama);
+            formData.append('Phone', phone);
+            formData.append('Email', email);
+            formData.append('Gaji Bersih (RM)', gajiBersih);
+            formData.append('Komitmen (RM)', komitmen);
+            formData.append('DSR Used', `${(dsrUsed * 100).toFixed(0)}%`);
+            formData.append('Max Instalment (RM)', maxInstalment.toFixed(2));
+            formData.append('Max Loan (RM)', maxLoan.toFixed(2));
+            formData.append('Interest Rate (%)', (interestRate * 100).toFixed(2));
+            formData.append('Loan Term (Years)', loanTerm);
+
+            fetch(scriptURL, { method: 'POST', body: formData})
+                .then(response => {
+                    showMessage('Calculation complete and successfully recorded!', 'success');
+                    enableButton();
+                })
+                .catch(error => {
+                    showMessage('Calculation complete, but failed to record. Please check your connection or the script URL.', 'error');
+                    console.error('Error!', error.message);
+                    enableButton();
+                });
+        });
+        
+        function enableButton() {
+            calculateBtn.disabled = false;
+            calculateBtn.textContent = 'Calculate & Record';
+        }
+
+        clearBtn.addEventListener('click', function() {
+            loanForm.reset(); 
+            resetResultsView();
+            messageBox.innerHTML = '';
+            showMessage('Form has been cleared.', 'info');
+        });
+
+        function showMessage(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200',
+                success: 'bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200',
+                error: 'bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200'
+            };
+            messageBox.innerHTML = `<div class="${colors[type]} p-4 rounded-lg font-medium transition-all duration-300">${message}</div>`;
+            setTimeout(() => {
+                if (messageBox.firstChild) {
+                   messageBox.firstChild.style.opacity = '0';
+                }
+                setTimeout(() => {
+                     messageBox.innerHTML = '';
+                }, 500)
+            }, 5000);
+        }
+        
+        resetResultsView();
+    </script>
+</body>
+</html>
