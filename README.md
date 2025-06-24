@@ -103,7 +103,7 @@ Loan-Calculator docs/
 
 ## Support & Contact
 
-For technical support or questions about this Petty Cash Manager system, please contact your system administrator or the development team.
+For technical support or questions about this Loan Calculator system, please contact your system administrator or the development team.
 
 **Version**: 1.0  
 **Last Updated**: January 2024  
