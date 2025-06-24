@@ -101,6 +101,10 @@ Loan-Calculator docs/
 
 ---
 
-## 📄 License
+## Support & Contact
 
-MIT (or specify your license here) 
+For technical support or questions about this Petty Cash Manager system, please contact your system administrator or the development team.
+
+**Version**: 1.0  
+**Last Updated**: January 2024  
+**Maintained By**: RBX Development Team 
